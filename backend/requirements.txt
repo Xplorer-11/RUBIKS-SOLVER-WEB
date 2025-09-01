@@ -1,3 +1,7 @@
 fastapi
 uvicorn[standard]
 kociemba
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart

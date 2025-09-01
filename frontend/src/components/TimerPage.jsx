@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import axios from 'axios';
 import { randomScrambleForEvent } from "cubing/scramble";
+import { AuthContext } from '../context/AuthContext';
+import '../App.css';
 
+// Helper function to format WCA times (which are in milliseconds)
 const formatTime = (time) => {
   if (time === null || time === undefined) return 'N/A';
   if (time <= 0) return '0.00';
@@ -20,19 +24,23 @@ const formatTime = (time) => {
   return result;
 };
 
+// Helper function to calculate Average of 5
 const calculateAo5 = (times) => {
   if (times.length < 5) return null;
-  const lastFive = times.slice(-5).sort((a, b) => a - b);
-  const middleThree = lastFive.slice(1, 4);
+  const lastFive = times.slice(-5).sort((a, b) => a - b); // Get last 5 and sort them
+  const middleThree = lastFive.slice(1, 4); // Remove best and worst
   const sum = middleThree.reduce((acc, time) => acc + time, 0);
   return Math.round(sum / 3);
 };
+
 
 const TimerPage = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [scramble, setScramble] = useState("Loading scramble...");
   const [sessionTimes, setSessionTimes] = useState([]);
+
+  const { token } = useContext(AuthContext); // Get the auth token from context
 
   const intervalRef = useRef(null);
   const startTimeRef = useRef(0);
@@ -42,21 +50,22 @@ const TimerPage = () => {
     setScramble(newScramble.toString());
   }, []);
 
+  // Generate the first scramble when the component loads
   useEffect(() => {
     generateScramble();
   }, [generateScramble]);
   
-  // This single useEffect now handles all timer logic based on the isRunning state
+  // This useEffect hook is the core of the timer.
+  // It starts/stops the interval based on the `isRunning` state.
   useEffect(() => {
     if (isRunning) {
-      // When the timer starts, record the start time
       startTimeRef.current = Date.now() - time;
       intervalRef.current = setInterval(() => {
         setTime(Date.now() - startTimeRef.current);
       }, 10);
     }
     
-    // The cleanup function runs when isRunning becomes false or the component unmounts
+    // Cleanup function runs when `isRunning` becomes false or the component unmounts
     return () => {
       clearInterval(intervalRef.current);
     };
@@ -64,26 +73,42 @@ const TimerPage = () => {
 
   const handleStartStop = () => {
     if (isRunning) {
-      // When stopping, add the current time to the session and generate a new scramble
-      setSessionTimes(prevTimes => [...prevTimes, time]);
+      // --- STOPPING THE TIMER ---
+      const finalTime = time; // Capture the time when stopped
+      setSessionTimes(prevTimes => [...prevTimes, finalTime]);
+      
+      // Save solve to the database if the user is logged in
+      if (token) {
+        const solveData = {
+          time_ms: finalTime,
+          scramble: scramble,
+        };
+        axios.post('http://localhost:8000/solves', solveData, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }).catch(err => {
+          console.error("Failed to save solve:", err);
+          // You could add logic here to handle expired tokens, e.g., logging the user out.
+        });
+      }
+      
       generateScramble();
     } else {
-      // When starting, reset the time display to zero before the timer starts
+      // --- STARTING THE TIMER ---
       setTime(0);
     }
-    // Toggle the running state, which will trigger the useEffect above
     setIsRunning(!isRunning);
   };
 
   const handleReset = () => {
-    // Stop the timer and reset all states
     setIsRunning(false);
     setTime(0);
     setSessionTimes([]);
     generateScramble();
   };
   
-  // This useEffect handles the spacebar press
+  // This useEffect handles the spacebar press for starting and stopping the timer
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.code === 'Space') {
@@ -95,9 +120,9 @@ const TimerPage = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [isRunning, time]); // We include 'time' here to ensure the session update has the latest value
+  }, [isRunning, time, token, scramble]); // Dependencies ensure the function has the latest state
 
-  // Calculate session stats
+  // Calculate session stats for display
   const bestTime = sessionTimes.length > 0 ? Math.min(...sessionTimes) : null;
   const worstTime = sessionTimes.length > 0 ? Math.max(...sessionTimes) : null;
   const ao5 = calculateAo5(sessionTimes);
