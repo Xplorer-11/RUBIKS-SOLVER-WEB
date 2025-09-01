@@ -83,7 +83,8 @@ const TimerPage = () => {
           time_ms: finalTime,
           scramble: scramble,
         };
-        axios.post('http://localhost:8000/solves', solveData, {
+        // --- THIS IS THE UPDATED LINE FOR DEPLOYMENT ---
+        axios.post(`${import.meta.env.VITE_API_URL}/solves`, solveData, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

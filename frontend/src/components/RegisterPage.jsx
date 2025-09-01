@@ -15,17 +15,17 @@ const RegisterPage = () => {
     setError('');
     try {
       // 1. Register the user
-      await axios.post('http://localhost:8000/users/register', { username, password });
+      await axios.post(`${import.meta.env.VITE_API_URL}/users/register`, { username, password });
 
       // 2. Automatically log them in after successful registration
       const formData = new URLSearchParams();
       formData.append('username', username);
       formData.append('password', password);
       
-      const response = await axios.post('http://localhost:8000/token', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/token`, formData);
       
       login(response.data.access_token);
-      navigate('/'); // Redirect to the solver page
+      navigate('/timer'); // Redirect after registration
     } catch (err) {
       setError(err.response?.data?.detail || 'Registration failed');
     }
