@@ -1,0 +1,57 @@
+# General / OS / IDE
+# -------------------------
+# macOS
+.DS_Store
+
+# JetBrains IDEs
+.idea/
+
+# VS Code
+.vscode/
+
+# Temporary files
+*.swp
+*~
+
+
+# Python / FastAPI Backend
+# -------------------------
+# Virtual Environment - very important to ignore
+/backend/venv/
+
+# Python cache files
+/backend/__pycache__/
+*.pyc
+
+# SQLite Database file
+/backend/database.sqlite
+/backend/database.sqlite-journal
+
+# Build artifacts
+/backend/build/
+/backend/dist/
+/backend/*.egg-info/
+
+
+# JavaScript / React Frontend
+# -------------------------
+# Dependencies - very important to ignore
+/frontend/node_modules/
+
+# Build output
+/frontend/dist/
+
+# Vite build cache
+/frontend/.vite/
+
+# Test coverage
+/frontend/coverage/
+
+# Logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# Local environment variables - never commit secrets
+/frontend/.env.local
+/frontend/.env.*.local

@@ -1,0 +1,493 @@
+:root {
+  --color-u: #ffffff; /* White */
+  --color-r: #b71c1c; /* Red */
+  --color-f: #009688; /* Green */
+  --color-d: #ffeb3b; /* Yellow */
+  --color-l: #ff6f00; /* Orange */
+  --color-b: #1976d2; /* Blue */
+  --background: #282c34;
+  --text-color: #f5f5f5;
+  --border-color: #444;
+  --highlight-color: #61dafb;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: var(--background);
+  color: var(--text-color);
+}
+
+.App {
+  text-align: center;
+  padding: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0;
+}
+
+code {
+  background-color: #444;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+}
+/* --- LAYOUT & NAVBAR STYLES --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #20232a;
+  padding: 0.75rem 2rem;
+  border-bottom: 2px solid var(--highlight-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-brand a {
+  color: var(--highlight-color);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.25rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  background-color: var(--highlight-color);
+  color: #20232a;
+}
+
+.container {
+  padding: 20px;
+}
+
+.page-content header {
+  margin-bottom: 20px;
+}
+
+/* --- SOLVER PAGE STYLES --- */
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.input-panel {
+  flex: 3;
+  min-width: 550px;
+}
+
+.instructions-panel {
+  flex: 2;
+  min-width: 300px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  height: fit-content;
+  border: 1px solid var(--border-color);
+}
+.instructions-panel h3 {
+  margin-top: 0;
+  color: var(--highlight-color);
+  text-align: center;
+}
+.instructions-panel p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.notation-guide h4 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.notation-guide h5 {
+  margin-bottom: 5px;
+  color: #aaa;
+}
+.notation-guide p {
+  font-size: 1rem;
+  margin-top: 0;
+}
+.notation-guide ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+.notation-guide li {
+  margin-bottom: 8px;
+}
+
+.color-picker {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.color-box {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.color-box.selected {
+  border-color: var(--highlight-color);
+  box-shadow: 0 0 15px var(--highlight-color);
+  transform: scale(1.2);
+}
+
+.cube-input-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 510px;
+  margin: 20px auto;
+}
+
+.face-container {
+  padding: 10px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+.face-container:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.face-container.active {
+  border-color: var(--highlight-color);
+  background-color: rgba(97, 218, 251, 0.1);
+}
+.face-container h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.face-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 150px;
+  height: 150px;
+  border: 2px solid var(--border-color);
+  margin: auto;
+}
+
+.sticker {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #555;
+  box-sizing: border-box;
+}
+
+.U { background-color: var(--color-u); color: #333; }
+.R { background-color: var(--color-r); color: var(--text-color); }
+.F { background-color: var(--color-f); color: var(--text-color); }
+.D { background-color: var(--color-d); color: #333; }
+.L { background-color: var(--color-l); color: var(--text-color); }
+.B { background-color: var(--color-b); color: var(--text-color); }
+
+/* --- CONTROLS & RESULTS (SHARED) --- */
+.controls {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.controls button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--highlight-color);
+  color: var(--background);
+}
+.controls .reset-btn { background-color: #ff4d4d; }
+
+.results {
+  margin-top: 20px;
+  min-height: 100px;
+}
+.solution,
+.error {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid var(--border-color);
+}
+.solve-instructions {
+  text-align: left;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+.solve-instructions h4 {
+  margin: 0 0 10px 0;
+  color: var(--highlight-color);
+}
+.solve-instructions p { margin: 0; }
+.solution h2 { color: #4caf50; }
+.error h2 { color: #f44336; }
+.solution-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+/* --- TIMER PAGE STYLES (REVISED) --- */
+.container .timer-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Adds space between header and main content */
+}
+.timer-page header {
+  margin-bottom: 0; /* Let the parent gap handle spacing */
+}
+
+/* This is the main container for the two columns */
+.timer-main-content {
+  width: 100%; /* Ensure it takes up full space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+/* This is the left column (timer + buttons) */
+.timer-display-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.timer-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 6rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  min-width: 450px;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 2rem;
+}
+
+.timer-btn {
+  padding: 1rem 2.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 12px;
+  border: none;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+.timer-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.start-btn { background-color: #4caf50; }
+.stop-btn { background-color: #f44336; }
+.timer-controls .reset-btn { background-color: #6c757d; }
+
+/* This is the right column (instructions) */
+.timer-instructions {
+  max-width: 400px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px 25px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.timer-instructions h4 {
+  text-align: center;
+  color: var(--highlight-color);
+  margin-top: 10px;
+}
+
+.timer-instructions ol {
+  padding-left: 25px;
+}
+
+.timer-instructions li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+/* --- TIMER INSTRUCTIONS STYLES --- */
+.timer-instructions {
+  max-width: 500px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px 25px;
+  text-align: left;
+  box-sizing: border-box; /* Ensures padding doesn't add to the width */
+}
+
+.timer-instructions h4 {
+  text-align: center;
+  color: var(--highlight-color);
+  margin-top: 10px;
+}
+
+.timer-instructions ol {
+  padding-left: 25px;
+}
+
+.timer-instructions li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+/* --- STATISTICS PAGE STYLES --- */
+.stats-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.stat-card {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  min-width: 350px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin-top: 0;
+  color: var(--highlight-color);
+  font-size: 1.5rem;
+}
+
+.stat-value {
+  font-size: 3.5rem;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 1rem 0;
+}
+
+.stat-details {
+  font-size: 0.9rem;
+  color: #aaa;
+  line-height: 1.4;
+}
+/* --- TIMER PAGE LAYOUT REVISION --- */
+.timer-page header {
+  margin-bottom: 1rem;
+}
+
+.timer-main-content {
+  align-items: flex-start; /* Align columns to the top */
+}
+
+/* --- NEW SCRAMBLE DISPLAY STYLES --- */
+.scramble-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #ccc;
+}
+
+/* --- NEW SESSION PANEL STYLES --- */
+.session-panel {
+  background-color: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  min-width: 250px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-panel h3 {
+  text-align: center;
+  color: var(--highlight-color);
+  margin: 0.5rem 0;
+}
+
+.session-stats {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.session-stats span {
+  font-weight: bold;
+  color: #aaa;
+  display: inline-block;
+  width: 70px; /* Align values */
+}
+
+.session-times-list {
+  list-style-type: decimal-leading-zero;
+  padding-left: 35px;
+  margin: 0;
+  overflow-y: auto; /* Make the list scrollable */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem;
+}
+.session-times-list li {
+  margin-bottom: 0.5rem;
+}

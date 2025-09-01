@@ -1,0 +1,89 @@
+{
+  "updated_at": "2025-08-25T00:00:00.000Z",
+  "records": {
+    "222": {
+      "single": {
+        "result": 42,
+        "person_name": "Teodor Zajder",
+        "competition_name": "Warsaw Cube Masters 2023",
+        "year": 2023
+      },
+      "average": {
+        "result": 94,
+        "person_name": "Yiheng Wang (王艺衡)",
+        "competition_name": "Johor Cube Open 2023",
+        "year": 2023
+      }
+    },
+    "333": {
+      "single": {
+        "result": 313,
+        "person_name": "Max Park",
+        "competition_name": "Pride in Long Beach 2023",
+        "year": 2023
+      },
+      "average": {
+        "result": 448,
+        "person_name": "Yiheng Wang (王艺衡)",
+        "competition_name": "Mofunland Cruise Open 2024",
+        "year": 2024
+      }
+    },
+    "444": {
+      "single": {
+        "result": 1678,
+        "person_name": "Max Park",
+        "competition_name": "Colorado Cubing Comes Back 2024",
+        "year": 2024
+      },
+      "average": {
+        "result": 1938,
+        "person_name": "Max Park",
+        "competition_name": "Arizona Speedcubing Spring 2023",
+        "year": 2023
+      }
+    },
+    "555": {
+      "single": {
+        "result": 3288,
+        "person_name": "Tymon Kolasiński",
+        "competition_name": "Rubik's WCA European Championship 2024",
+        "year": 2024
+      },
+      "average": {
+        "result": 3669,
+        "person_name": "Max Park",
+        "competition_name": "Western Championship 2023",
+        "year": 2023
+      }
+    },
+    "666": {
+      "single": {
+        "result": 5974,
+        "person_name": "Max Park",
+        "competition_name": "CubingUSA Southeast Championship 2022",
+        "year": 2022
+      },
+      "average": {
+        "result": 6711,
+        "person_name": "Max Park",
+        "competition_name": "Rubik's WCA World Championship 2023",
+        "year": 2023
+      }
+    },
+    "777": {
+      "single": {
+        "result": 9363,
+        "person_name": "Max Park",
+        "competition_name": "Marshall Cubing September 2022",
+        "year": 2022
+      },
+      "average": {
+        "result": 9923,
+        "person_name": "Max Park",
+        "competition_name": "University of Puget Sound Spring 2023",
+        "year": 2023
+      }
+    }
+  }
+}
