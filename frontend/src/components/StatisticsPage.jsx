@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../App.css'; // Make sure to import your CSS for styling
+import '../App.css';
 
 // Helper function to format WCA times (which are in hundredths of a second)
 const formatWcaTime = (hundredths) => {
@@ -33,10 +33,8 @@ const StatisticsPage = () => {
       setError(null);
       
       try {
-        // Fetch the data from your local backend endpoint
-        const response = await axios.get('http://localhost:8000/stats');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/stats`);
         
-        // We'll just grab the 3x3x3 records for this example
         const records333 = {
           single: response.data.records['333'].single,
           average: response.data.records['333'].average
@@ -52,7 +50,7 @@ const StatisticsPage = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this runs once when the component mounts
+  }, []);
 
   if (isLoading) {
     return <div className="page-content"><h2>Loading Statistics... ⏳</h2></div>;

@@ -94,7 +94,8 @@ const SolverPage = () => {
     const cubeString = FACES.map(face => cubeState[face].join('')).join('');
 
     try {
-      const response = await axios.post('http://localhost:8000/solve', {
+      // --- THIS IS THE UPDATED LINE FOR DEPLOYMENT ---
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/solve`, {
         cube_string: cubeString,
       });
       setSolution(response.data.solution);
